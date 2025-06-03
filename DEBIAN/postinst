@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+
+ln -sf /lib/gmtfh.py /usr/bin/gmtfh
+
+exit 0

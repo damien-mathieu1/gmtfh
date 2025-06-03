@@ -1,0 +1,11 @@
+Package: gmtfh
+Version: 1.0
+Section: base
+Priority: optional
+Architecture: all
+Essential: no
+Installed-Size: 1024
+Maintainer: damien mathieu
+Description: gmtfh (give me the f***ing hour) - gmt for the rastafari
+  This package print the time in gmt format with a rastafari twist.
+Depends: python3, python3-dateutil
