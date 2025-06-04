@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Pour reconstruire la base de données des paquets d'un miroir Debian
+# et signer la Release avec une clé GPG
+# Usage : make_release [chemin] [clef]
+# (c) Damien MATHIEU
+
+# depends : dpkg-dev, gzip
+
+# Si il y a un argument passé ...
+if [ -n "$1" ]
+then
+
+	# Si c'est un chemin vers un dossier ...
+	if [ -d "$1" ];
+	then
+	
+		# On se positionne dedans.
+		cd $1
+		
+	else
+		
+		# Ce n'est pas un dossier
+		echo "Le chemin spécifié «$1» n'est pas valide !"
+		exit
+		
+	fi
+	
+fi
+
+# On vérifie que ça ressemble bien à un miroir
+ls *deb > /dev/null 2>&1
+
+# Si on a trouvé des ".deb"
+if [ $? -eq 0 ]
+then
+
+	echo "Reconstruction de la bdd des paquets dans le miroir «`pwd`»."
+
+	rm -f ./Packages
+
+	dpkg-scanpackages . /dev/null > Packages 
+	chmod o+r ./Packages
+
+	apt-ftparchive release . > Release  
+	chmod o+r ./Release
+
+	gpg --default-key $2 --clearsign -o InRelease Release
+	
+else
+
+	echo "«`pwd`» n'est pas un miroir : rien à faire !"
+	
+fi

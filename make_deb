@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Pour faciliter la création de paquets debian
+# (c) Michel FACERIAS
+
+#depends : dpkg-dev, fakeroot, lintian
+
+# Si il y a un argument passé ET si c'est un chemin vers un dossier ...
+if [[ -n "$1" && -d "$1" ]]
+then
+
+	# On se positionne en dessous
+	cd `dirname $1`
+		
+else
+	
+	echo "Le chemin spécifié «$1» n'est pas valide !"
+	
+	exit
+	
+fi
+
+PAQUET=`basename $1 2>/dev/null`
+
+# On vérifie que ça ressemble bien à la source d'un paquet
+ls $PAQUET/DEBIAN/control > /dev/null 2>&1
+
+# Si on a trouvé le fichier "control"
+if [ $? -eq 0 ]
+then
+
+	fakeroot dpkg-deb -b $PAQUET
+	
+	echo -e "\nlintian : vérification du paquet «$PAQUET.deb»."
+	lintian --color auto $PAQUET.deb
+	echo -e "\ndpkg-name : renommage du paquet «$PAQUET.deb»."
+	chmod o+r $PAQUET.deb
+	dpkg-name -o $PAQUET.deb > /dev/null
+	
+else
+
+	echo "«`pwd`» n'est pas la source d'un paquet !"
+
+fi
