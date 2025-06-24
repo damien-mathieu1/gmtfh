@@ -1,0 +1,18 @@
+Package: gmtfh-damien-mathieu
+Version: 1.0
+Architecture: all
+Essential: no
+Maintainer: Damien MATHIEU <damien.mathieu@etu.umontpellier.fr>
+Installed-Size: 1024
+Depends: python3, python3-dateutil
+Filename: ./gmtfh-damien-mathieu_1.0_all.deb
+Size: 1312
+MD5sum: 8a057a6c1856d5f71f6b73701625ce08
+SHA1: 29419c0f6c0e948059c185569204412db0ddc2be
+SHA256: caefb9e58714e4429a2c5bc0d2e0fe32bd69b7beae512e23cc5fe93e46e8ab0e
+Section: base
+Priority: optional
+Description:
+  The gmtfh-damien-mathieu (give me the f***ing hour) - gmt-damien-mathieu for the rastafari
+  This package print the time in gmt format with a rastafari twist.
+
